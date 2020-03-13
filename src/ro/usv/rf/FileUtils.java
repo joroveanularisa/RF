@@ -1,5 +1,6 @@
 package ro.usv.rf;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -13,16 +14,25 @@ public class FileUtils
 	private static final String inputFileValuesSeparator = " ";
 	private static final String outputFileValuesSeparator = ",";
 	
-	protected static double[][] readLearningSetFromFile(String fileName)
+	protected static double[][] readLearningSetFromFile(String fileName) throws USVInputFileCustomException
 	{
 		//Start with an ArrayList<ArrayList<Double>>
 		List<ArrayList<Double>> learningSet = new ArrayList<ArrayList<Double>>();
 		// read file into stream, try-with-resources
-		try (Stream<String> stream = Files.lines(Paths.get(fileName))) {
+		try  {
+			Stream<String> stream = Files.lines(Paths.get(fileName));
 			learningSet = stream.map(FileUtils::convertLineToLearningSetRow).collect(Collectors.toList());
-		} catch (IOException e) {
-			e.printStackTrace();
+		} 
+		catch (FileNotFoundException fnfe)
+		{
+			throw new USVInputFileCustomException(" We cannot find the scepicified file on USV computer");
+		}	
+		catch (IOException ioe) {
+			throw new USVInputFileCustomException(" We encountered some errors while trying to read the specified file: " + ioe.getMessage());
 		}
+		catch (Exception e) {
+			throw new USVInputFileCustomException(" Other errors: " + e.getMessage());
+		}	
 		//  convert ArrayList<ArrayList<Double>> to double[][] for performance
 		return convertToBiDimensionalArray(learningSet);
 	}
