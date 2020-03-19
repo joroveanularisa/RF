@@ -20,6 +20,44 @@ public class MainClass {
 				System.out.println("City Block distance between the first point and " + (i + 1) + ": "
 						+ DistanceUtils.CityBlockDistance(learningSet[0], learningSet[i]));
 			}
+			double distances[][] = new double[numberOfPatterns][numberOfPatterns];
+
+			double[][] learningSetProcessed = new double[numberOfPatterns][numberOfFeatures - 1];
+			for (int i = 0; i < numberOfPatterns; i++) {
+				for (int j = 0; j < numberOfFeatures - 1; j++) {
+					learningSetProcessed[i][j] = learningSet[i][j];
+				}
+			}
+			for (int i = 0; i < numberOfPatterns; i++) {
+				for (int j = 0; j < i; j++) {
+					distances[i][j] = distances[j][i] = DistanceUtils.EuclidianDistance(learningSetProcessed[i],
+							learningSetProcessed[j]);
+				}
+			}
+			for (int i = 0; i < numberOfPatterns; i++) {
+				distances[i][i] = 0.0;
+			}
+			double[][] finalOutput = new double[numberOfPatterns][numberOfPatterns + 1];
+			for (int i = 0; i < numberOfPatterns; i++) {
+				for (int j = 0; j < numberOfPatterns; j++) {
+					finalOutput[i][j] = distances[i][j];
+				}
+			}
+
+			for (int i = 0; i < numberOfPatterns; i++) {
+				finalOutput[i][numberOfPatterns] = learningSet[i][numberOfFeatures - 1];
+			}
+			double minDist = Double.MAX_VALUE;
+			int indexMinDist = 3;
+			for (int i = 0; i < numberOfPatterns - 1; i++) {
+				if (distances[numberOfPatterns - 1][i] < minDist) {
+					minDist = distances[numberOfPatterns - 1][i];
+					indexMinDist = i;
+				}
+			}
+			finalOutput[numberOfPatterns - 1][numberOfPatterns] = finalOutput[indexMinDist][numberOfPatterns];
+			FileUtils.writeLearningSetToFile("out.txt", finalOutput);
+
 		} catch (USVInputFileCustomException e) {
 			System.out.println(e.getMessage());
 		} finally {

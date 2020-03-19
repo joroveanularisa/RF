@@ -6,6 +6,17 @@ public class DistanceUtils {
 		return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
 	}
 	
+	public static double EuclidianDistance(double[] x, double[] y) {
+		double sum = 0;
+		double dist = 0.0;
+		for (int i = 0; i < x.length; i++) {
+			sum += Math.pow(x[i] - y[i], 2);
+		}
+		dist = Math.sqrt(sum);
+		String str = String.format("%.2f", dist);
+		dist = Double.valueOf(str);
+		return dist;
+	}
 
 	public static double CebisevDistance(double x[], double y[]) {
 		double maxim = Double.MIN_VALUE;
