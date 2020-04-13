@@ -48,6 +48,30 @@ public class DistanceUtils {
 		return Math.pow(dist, (double) 1 / n);
 	}
 	
+	
+	public static double[] CentruDeGreutate(List<Double[]> clasa)
+	{
+		int n = clasa.size();
+		int m = clasa.get(0).length;
+		double[] centru = new double[m];
+		for(int i=0;i<m;i++)
+		{
+			centru[i] = 0;
+		}
+		for(int i=0;i<n;i++)
+		{
+			for(int j = 0; j < m; j++)
+			{
+				centru[j] += clasa.get(i)[j];
+			}
+		}
+		for(int j=0;j<m;j++)
+		{
+			centru[j] = centru[j] / n;
+		}
+		return centru;
+	}
+	
 	public static double GetClass(double[][] inMatr) {
 		List<Double> classes = new ArrayList<Double>();
 		for (int i = 0; i < inMatr.length - 1; i++) {
