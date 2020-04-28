@@ -11,13 +11,13 @@ import java.util.stream.Stream;
 
 public class FileUtils 
 {
-	private static final String inputFileValuesSeparator = " ";
+	private static final String inputFileValuesSeparator = ",";
 	private static final String outputFileValuesSeparator = ",";
 	
-	protected static double[][] readLearningSetFromFile(String fileName) throws USVInputFileCustomException
+	protected static String[][] readLearningSetFromFile(String fileName) throws USVInputFileCustomException
 	{
 		//Start with an ArrayList<ArrayList<Double>>
-		List<ArrayList<Double>> learningSet = new ArrayList<ArrayList<Double>>();
+		List<ArrayList<String>> learningSet = new ArrayList<ArrayList<String>>();
 		// read file into stream, try-with-resources
 		try  {
 			Stream<String> stream = Files.lines(Paths.get(fileName));
@@ -37,15 +37,15 @@ public class FileUtils
 		return convertToBiDimensionalArray(learningSet);
 	}
 	
-	private static double[][] convertToBiDimensionalArray(List<ArrayList<Double>> learningSet) {
+	private static String[][] convertToBiDimensionalArray(List<ArrayList<String>> learningSet) {
 		
-		double[][] learningSetArray = new double[learningSet.size()][];
+		String[][] learningSetArray = new String[learningSet.size()][];
 		
 		for (int n = 0; n < learningSet.size(); n++) {
-			ArrayList<Double> rowListEntry = learningSet.get(n);
+			ArrayList<String> rowListEntry = learningSet.get(n);
 			
 			// get each row double values
-			double[] rowArray = new double[learningSet.get(n).size()];
+			String[] rowArray = new String[learningSet.get(n).size()];
 			
 			for (int p = 0; p < learningSet.get(n).size(); p++) 
 			{				
@@ -57,14 +57,14 @@ public class FileUtils
 		return learningSetArray;
 	}
 	
-	private static ArrayList<Double> convertLineToLearningSetRow(String line)
+	private static ArrayList<String> convertLineToLearningSetRow(String line)
 	{
-		ArrayList<Double> learningSetRow = new ArrayList<Double>();
+		ArrayList<String> learningSetRow = new ArrayList<String>();
 		String[] stringValues = line.split(inputFileValuesSeparator);
 		//we need to convert from string to double
 		for (int p = 0; p < stringValues.length; p++)
 		{
-			learningSetRow.add(Double.valueOf(stringValues[p]));
+			learningSetRow.add(stringValues[p]);
 		}
 		return learningSetRow;
 	}

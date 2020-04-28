@@ -1,0 +1,46 @@
+1,insufficient
+1,insufficient
+1.5,insufficient
+1.5,insufficient
+1.5,insufficient
+1.5,insufficient
+1.5,insufficient
+2,insufficient
+2,insufficient
+2,insufficient
+2.5,insufficient
+2.5,insufficient
+2.5,insufficient
+2.5,insufficient
+2.7,insufficient
+3.5,insufficient
+4,insufficient
+4,insufficient
+4.25,insufficient
+4.5,insufficient
+4.5,insufficient
+4.5,insufficient
+4.5,insufficient
+4.75,insufficient
+4.8,insufficient
+4.8,insufficient
+5,sufficient
+5.8,sufficient
+6,sufficient
+6,sufficient
+6.65,sufficient
+6.8,sufficient
+6.85,sufficient
+7.4,good
+7.8,good
+8,good
+8,good
+8,good
+8.4,good
+9,good
+9.1,good
+9.1,very good
+9.25,very good
+9.3,very good
+9.4,very good
+9.7,very good

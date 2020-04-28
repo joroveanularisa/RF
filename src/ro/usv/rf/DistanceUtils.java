@@ -1,7 +1,9 @@
 package ro.usv.rf;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.lang.*; 
+import java.io.*; 
 
 public class DistanceUtils {
 
@@ -70,6 +72,50 @@ public class DistanceUtils {
 			centru[j] = centru[j] / n;
 		}
 		return centru;
+	}
+	
+	
+	public static String getKNN(int k, Double x, String[][] learningSet)
+	{
+		ArrayList<Neighbour> neighbours = new ArrayList<Neighbour>();
+		for(int i=0;i<learningSet.length;i++)
+		{
+			Double dist = DistanceUtils.EuclidianDistance(Double.valueOf(learningSet[i][0]), x, 0, 0);
+			neighbours.add(new Neighbour(Double.valueOf(learningSet[i][0]), dist, learningSet[i][learningSet[i].length - 1]));
+		}
+		Collections.sort(neighbours, new SortNeighbour());
+		
+		
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		//System.out.println()
+		for(int i=0;i<k;i++)
+		{
+			String value = neighbours.get(i).value;
+			Integer nr_ap = map.get(value);
+			if(nr_ap != null)
+			{
+				map.put(value,  nr_ap + 1);
+			}
+			else
+			{
+				map.put(value, 1);
+			}
+		}
+		
+		int max_ap = Integer.MIN_VALUE;
+		String res = "";
+		
+		for(Map.Entry<String, Integer>it: map.entrySet())
+		{
+			if(it.getValue() > max_ap)
+			{
+				max_ap = it.getValue();
+				res = it.getKey();
+			}
+		}
+		
+		
+		return res;
 	}
 	
 	public static double GetClass(double[][] inMatr) {
